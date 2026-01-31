@@ -28,6 +28,11 @@ This project simulates a real-world enterprise network architecture connecting a
 - `configs/`: Contains the running-config for all Cisco devices (IOS).
 - `images/`: High-resolution topology diagrams.
 
+### ⚙️ Performance & Optimization
+- **Routing Efficiency:** Used **Passive Interfaces** to minimize OSPF overhead on user subnets.
+- **Core Architecture:** Established **Layer 3 Point-to-Point links** (Transit VLANs) for robust Core-to-Core communication.
+- **Loop Prevention:** Enabled **RPVST+** across all switches to prevent Layer 2 loops.
+- 
 ## 🚀 How to Run
 1. Import the node images in EVE-NG (Cisco IOL or VIOS).
 2. Replicate the topology as shown in the diagram.
