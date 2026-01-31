@@ -5,7 +5,7 @@ This project simulates a real-world enterprise network architecture connecting a
 
 ## 🗺️ Network Topology
 ![Enterprise Network Topology](images/topology.png)
-*(Note: This topology represents the full architecture including HQ, Branch, and ISP connectivity.)*
+
 
 ## 🛠️ Key Technologies Implemented
 ### 🔹 Switching & Layer 2
