@@ -1,0 +1,274 @@
+version 17.12
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+hostname MLS-1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+ip audit notify log
+ip audit po max-events 100
+ip domain name mls.com
+ip cef
+login on-success log
+no ipv6 cef
+!
+!
+!
+!
+!
+!
+!
+vtp version 1
+multilink bundle-name authenticated
+!
+crypto pki trustpoint TP-self-signed-67108896
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-67108896
+ revocation-check none
+ rsakeypair TP-self-signed-67108896
+ hash sha256
+!
+!
+crypto pki certificate chain TP-self-signed-67108896
+ certificate self-signed 01
+  3082032C 30820214 A0030201 02020101 300D0609 2A864886 F70D0101 0B050030
+  2F312D30 2B060355 04030C24 494F532D 53656C66 2D536967 6E65642D 43657274
+  69666963 6174652D 36373130 38383936 301E170D 32363031 33303130 32363537
+  5A170D33 36303133 30313032 3635375A 302F312D 302B0603 5504030C 24494F53
+  2D53656C 662D5369 676E6564 2D436572 74696669 63617465 2D363731 30383839
+  36308201 22300D06 092A8648 86F70D01 01010500 0382010F 00308201 0A028201
+  0100A078 5B51CF6E EA46803E 8BDFAAB8 B6C5A5F8 2B8581E2 43843FD1 F8220B90
+  674CF032 AA601A28 69704A7D 4C567F2A 45D21984 31C3839E C19308B2 2659F8BD
+  C13C0A9E 2389B1EF 48EF132C 6E323D5B B874FEF5 D196ED95 C4930F7A 0B372C26
+  CD2EA7B3 B35AFD04 3E425068 8371EEA6 07B7C717 741F1E6E DF9C1F12 1EAEAA92
+  7BAD98F3 1B1075D1 95670CD0 948967FD 9ED1E552 C9C556A5 6FA5DE26 2BCF9AC9
+  E68D470A 5A66C778 CBE12DD4 DD119B7C 5B4664D3 29EC6802 704FEA46 13A880EC
+  28FB01A7 2A61E8AF 8D718E3A A4483349 062A993D D99843EC 334392DF B05567ED
+  A8CF5AAD F40153B0 D2F20B34 55073DA1 9C022835 DFFB414B E0FFF076 1B4376A7
+  D4CB0203 010001A3 53305130 1D060355 1D0E0416 0414F9B8 E34D6229 B3384CC3
+  6DDBF5C8 CEA9E46A 6F03301F 0603551D 23041830 168014F9 B8E34D62 29B3384C
+  C36DDBF5 C8CEA9E4 6A6F0330 0F060355 1D130101 FF040530 030101FF 300D0609
+  2A864886 F70D0101 0B050003 82010100 52251FF4 C092D7C1 A1D3743A 0957107E
+  F3134137 CBF1A73F 3E7267B6 2187F359 7DE92166 169F9D51 F1606DF8 119831AA
+  8A5E8184 FBDCF95E FA72369B 4CAA7BAC 830CE96F 4858550E AEC7D3C9 9DF429E7
+  E0C9EEB4 F536AD2F B3C656AE AF9B4F30 0BEA1C09 F07002C0 C626844C D5CE268C
+  E35DC2E6 AB34E6E9 DFFC6FA6 C7D708E5 37897507 ABECD805 696781AD E6695C04
+  AE6A0FA9 271127DC 8721D5EA 1DFBF49D 3B1AFCFF C7760876 B8A3CD7B 25C6731D
+  4B4B1B18 DB6EB87C 4E1C2B77 42F4A9AB B53230F7 C72A7C78 205A3C8B 2F7F4ACA
+  22013A3F F3293C33 E0EC35C3 76F1037D 0749A9E7 779CF922 89CF0FCF D41E421A
+  632F70E0 8912737A A9974FE9 E7C13E7C
+        quit
+!
+!
+memory free low-watermark processor 80589
+!
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+spanning-tree vlan 30,99,101-102 priority 4096
+spanning-tree vlan 103-105 priority 8192
+!
+username admin password 0 a1
+!
+vlan internal allocation policy ascending
+!
+lldp run
+!
+!
+!
+!
+interface Loopback0
+ ip address 172.16.0.1 255.255.255.255
+!
+interface Port-channel1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Ethernet0/0
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Ethernet0/1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Ethernet0/2
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Ethernet0/3
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Ethernet1/0
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Ethernet1/1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 1 mode active
+!
+interface Ethernet1/2
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 1 mode active
+!
+interface Ethernet1/3
+ switchport access vlan 30
+ switchport mode access
+!
+interface Ethernet2/0
+ no switchport
+ ip address 10.100.1.1 255.255.255.252
+ ip ospf network point-to-point
+!
+interface Ethernet2/1
+ no switchport
+ ip address 10.100.2.1 255.255.255.252
+ ip ospf network point-to-point
+!
+interface Ethernet2/2
+!
+interface Ethernet2/3
+!
+interface Ethernet3/0
+!
+interface Ethernet3/1
+!
+interface Ethernet3/2
+!
+interface Ethernet3/3
+!
+interface Ethernet4/0
+!
+interface Ethernet4/1
+!
+interface Ethernet4/2
+!
+interface Ethernet4/3
+!
+interface Vlan3
+ no ip address
+ shutdown
+!
+interface Vlan30
+ ip address 10.10.10.2 255.255.255.0
+!
+interface Vlan44
+ ip address 172.30.0.2 255.255.255.252
+ ip ospf network point-to-point
+!
+interface Vlan99
+ ip address 10.10.100.3 255.255.255.0
+ vrrp 1 ip 10.10.100.1
+ vrrp 1 priority 120
+!
+interface Vlan101
+ ip address 10.1.101.3 255.255.255.0
+ ip helper-address 10.10.10.1
+ ip access-group ISOLATE-VLANs in
+ vrrp 101 ip 10.1.101.1
+ vrrp 101 priority 120
+!
+interface Vlan102
+ ip address 10.1.102.3 255.255.255.0
+ ip helper-address 10.10.10.1
+ ip access-group ISOLATE-VLANs in
+ vrrp 102 ip 10.1.102.1
+ vrrp 102 priority 120
+!
+interface Vlan103
+ ip address 10.1.103.3 255.255.255.0
+ ip helper-address 10.10.10.1
+ ip access-group ISOLATE-VLANs in
+ vrrp 103 ip 10.1.103.1
+!
+interface Vlan104
+ ip address 10.1.104.3 255.255.255.0
+ ip helper-address 10.10.10.1
+ ip access-group ISOLATE-VLANs in
+ vrrp 104 ip 10.1.104.1
+!
+interface Vlan105
+ ip address 10.1.105.3 255.255.255.0
+ ip helper-address 10.10.10.1
+ vrrp 105 ip 10.1.105.1
+!
+interface Vlan201
+ no ip address
+ shutdown
+!
+router ospf 1
+ passive-interface default
+ no passive-interface Ethernet2/0
+ no passive-interface Ethernet2/1
+ no passive-interface Vlan44
+ network 10.1.101.0 0.0.0.255 area 0
+ network 10.1.102.0 0.0.0.255 area 0
+ network 10.1.103.0 0.0.0.255 area 0
+ network 10.1.104.0 0.0.0.255 area 0
+ network 10.1.105.0 0.0.0.255 area 0
+ network 10.10.10.0 0.0.0.255 area 0
+ network 10.100.1.0 0.0.0.3 area 0
+ network 10.100.2.0 0.0.0.3 area 0
+ network 172.16.0.1 0.0.0.0 area 0
+ network 172.30.0.0 0.0.0.3 area 0
+!
+ip forward-protocol nd
+!
+!
+ip http server
+ip http secure-server
+ip ssh bulk-mode 131072
+!
+ip access-list extended ISOLATE-VLANs
+ 10 permit udp any host 10.10.10.1 eq bootps
+ 20 permit udp any host 10.10.10.1 eq bootpc
+ 30 deny ip any host 10.10.10.1
+ 90 deny ip any 10.100.1.0 0.0.0.3
+ 100 deny ip any 10.100.2.0 0.0.0.3
+ 110 deny ip any 10.100.3.0 0.0.0.3
+ 120 deny ip any 10.100.4.0 0.0.0.3
+ 130 deny ip any 10.100.5.0 0.0.0.3
+ 140 deny ip any host 172.16.0.4
+ 150 deny ip any host 172.16.0.3
+ 160 deny ip any 10.200.0.0 0.0.0.3
+ 170 deny ip any 10.201.0.0 0.0.0.3
+ 171 deny ip any 10.10.100.0 0.0.0.255
+ 180 permit ip any any
+!
+!
+!
+!
+!
+control-plane
+!
+!
+!
+line con 0
+ logging synchronous
+line aux 0
+line vty 0 4
+ login local
+ transport input ssh
+!
+!
+end

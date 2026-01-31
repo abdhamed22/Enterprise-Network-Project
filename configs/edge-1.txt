@@ -1,0 +1,197 @@
+version 17.12
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+hostname Edge-1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+ip cef
+login on-success log
+no ipv6 cef
+!
+!
+!
+!
+!
+!
+!
+!
+multilink bundle-name authenticated
+!
+!
+crypto pki trustpoint TP-self-signed-67109152
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-67109152
+ revocation-check none
+ rsakeypair TP-self-signed-67109152
+ hash sha256
+!
+!
+crypto pki certificate chain TP-self-signed-67109152
+ certificate self-signed 01
+  3082032C 30820214 A0030201 02020101 300D0609 2A864886 F70D0101 0B050030
+  2F312D30 2B060355 04030C24 494F532D 53656C66 2D536967 6E65642D 43657274
+  69666963 6174652D 36373130 39313532 301E170D 32363031 33303133 35363538
+  5A170D33 36303133 30313335 3635385A 302F312D 302B0603 5504030C 24494F53
+  2D53656C 662D5369 676E6564 2D436572 74696669 63617465 2D363731 30393135
+  32308201 22300D06 092A8648 86F70D01 01010500 0382010F 00308201 0A028201
+  0100B530 FF0FE001 8698B3FC 8DE5EC43 DA37EBE2 8129BC73 87DC841F 3533EB4B
+  A454B77C 71AED66C E7AEF1E5 02464B15 FAD5FDDF 775297A6 3F818E07 659C20B9
+  3C907ED2 AE04BDC0 113FC784 8BABE55C E631DF3C C8C68A77 78779228 06C77C64
+  C743193E 7FD2C9E3 D2DE8404 C8003B54 750178E0 2E1CD859 071AA9F8 D298BB13
+  14E77264 E8FA1D19 D89BDBE8 1989C474 7B2163EF 84DEE0F5 60090AD5 35767CF5
+  DB298343 CF8C5476 91C5E429 36B17743 167B6617 087DC259 8792B50B B236A1DA
+  4FC58D61 47A60E02 3BBEE815 1AEB7E00 71E4D27E 93F03686 CA9755A8 2B8611B0
+  B5AA89F5 E233E3C4 F98B69E4 9242F1A3 E33C280A 0919587A 24F69FE5 78486DF3
+  576F0203 010001A3 53305130 1D060355 1D0E0416 0414FB08 355E3828 BE79935A
+  E4081AA4 676CCC6C F18E301F 0603551D 23041830 168014FB 08355E38 28BE7993
+  5AE4081A A4676CCC 6CF18E30 0F060355 1D130101 FF040530 030101FF 300D0609
+  2A864886 F70D0101 0B050003 82010100 8B78032F 66AA029F C9258D46 BE15A12A
+  83B80DBD CB3B6AE3 1A369AF5 52C590DB CAA952CC BEEA0363 95B6C294 3B5347C5
+  1C062E98 1FB9F69D C3F2875C 73A77484 209269E1 4B27EFD7 CE96F240 3E00F533
+  1C2E6EEC 7DF2EEC1 C455A3D2 F92733CB 235DF894 2D4B8E7A 2E1732FA F00B78EC
+  11337C78 C67CED13 9F6E58FF 292BFF3B 34265D8E D724F1D0 C9CDE9CF 695A5523
+  689B0830 FE017223 7829AFB8 21D4B170 D7D48554 DF1FEEBF 0D2B83DD 2096C411
+  A07C1ACB 05D999E5 5C9B772D CD803F13 A05D501B 4DB96B46 3079AF30 FE763F12
+  BE65DFF9 FDA87B5A 2DD7B60D E543D43B CFF3AD8E C72D2CFB E0181E62 432A8DA7
+  6BAF2E70 91DEB45E A899BE5B 4D04C195
+        quit
+!
+!
+memory free low-watermark processor 81225
+!
+!
+spanning-tree mode rapid-pvst
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 172.16.0.4 255.255.255.0
+!
+interface Ethernet0/0
+ ip address 10.100.5.1 255.255.255.252
+ ip nat inside
+ ip ospf network point-to-point
+!
+interface Ethernet0/1
+ ip address 10.100.1.2 255.255.255.252
+ ip nat inside
+ ip ospf network point-to-point
+!
+interface Ethernet0/2
+ ip address 10.100.3.2 255.255.255.252
+ ip nat inside
+ ip ospf network point-to-point
+!
+interface Ethernet0/3
+ ip address 10.201.0.1 255.255.255.252
+ ip nat inside
+!
+interface Ethernet1/0
+ ip address 203.0.113.1 255.255.255.248
+ ip nat outside
+!
+interface Ethernet1/1
+ no ip address
+ shutdown
+!
+interface Ethernet1/2
+ no ip address
+ shutdown
+!
+interface Ethernet1/3
+ no ip address
+ shutdown
+!
+interface Ethernet2/0
+ no ip address
+ shutdown
+!
+interface Ethernet2/1
+ no ip address
+ shutdown
+!
+interface Ethernet2/2
+ no ip address
+ shutdown
+!
+interface Ethernet2/3
+ no ip address
+ shutdown
+!
+router ospf 1
+ network 10.100.1.0 0.0.0.3 area 0
+ network 10.100.3.0 0.0.0.3 area 0
+ network 10.100.5.0 0.0.0.3 area 0
+ network 10.201.0.0 0.0.0.7 area 1
+ network 172.16.0.4 0.0.0.0 area 0
+ default-information originate
+!
+ip forward-protocol nd
+!
+!
+ip http server
+ip http secure-server
+ip nat inside source list NAT-POOL interface Ethernet1/0 overload
+ip route 0.0.0.0 0.0.0.0 203.0.113.2
+ip ssh bulk-mode 131072
+!
+ip access-list standard NAT-POOL
+ 10 permit 10.0.0.0 0.255.255.255
+!
+!
+!
+!
+!
+control-plane
+!
+!
+!
+line con 0
+ logging synchronous
+line aux 0
+line vty 0 4
+ login
+ transport input ssh
+!
+!
+!
+!
+end

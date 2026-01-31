@@ -1,0 +1,194 @@
+version 17.12
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+hostname DHCP-serv
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+ip dhcp excluded-address 10.1.101.1
+ip dhcp excluded-address 10.1.101.2
+ip dhcp excluded-address 10.1.101.3
+ip dhcp excluded-address 10.1.102.1
+ip dhcp excluded-address 10.1.102.2
+ip dhcp excluded-address 10.1.102.3
+ip dhcp excluded-address 10.1.103.1
+ip dhcp excluded-address 10.1.103.2
+ip dhcp excluded-address 10.1.103.3
+ip dhcp excluded-address 10.1.104.1
+ip dhcp excluded-address 10.1.104.2
+ip dhcp excluded-address 10.1.104.3
+ip dhcp excluded-address 10.1.105.1
+ip dhcp excluded-address 10.1.105.2
+ip dhcp excluded-address 10.1.105.3
+ip dhcp excluded-address 10.2.201.1
+!
+ip dhcp pool Vlan101-pool
+ network 10.1.101.0 255.255.255.0
+ default-router 10.1.101.1
+ dns-server 1.1.1.1
+!
+ip dhcp pool Vlan102-pool
+ network 10.1.102.0 255.255.255.0
+ default-router 10.1.102.1
+ dns-server 1.1.1.1
+!
+ip dhcp pool Vlan103-pool
+ network 10.1.103.0 255.255.255.0
+ default-router 10.1.103.1
+ dns-server 1.1.1.1
+!
+ip dhcp pool VLan104-pool
+ network 10.1.104.0 255.255.255.0
+ default-router 10.1.104.1
+ dns-server 1.1.1.1
+!
+ip dhcp pool Vlan105-pool
+ network 10.1.105.0 255.255.255.0
+ default-router 10.1.105.1
+ dns-server 1.1.1.1
+!
+ip dhcp pool Vlan201-pool
+ network 10.2.201.0 255.255.255.0
+ default-router 10.2.201.1
+ dns-server 1.1.1.1
+!
+!
+!
+ip cef
+login on-success log
+no ipv6 cef
+!
+!
+!
+!
+!
+!
+!
+!
+multilink bundle-name authenticated
+!
+!
+crypto pki trustpoint TP-self-signed-67109184
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-67109184
+ revocation-check none
+ rsakeypair TP-self-signed-67109184
+ hash sha256
+!
+!
+crypto pki certificate chain TP-self-signed-67109184
+ certificate self-signed 01
+  3082032C 30820214 A0030201 02020101 300D0609 2A864886 F70D0101 0B050030
+  2F312D30 2B060355 04030C24 494F532D 53656C66 2D536967 6E65642D 43657274
+  69666963 6174652D 36373130 39313834 301E170D 32363031 33303130 32373038
+  5A170D33 36303133 30313032 3730385A 302F312D 302B0603 5504030C 24494F53
+  2D53656C 662D5369 676E6564 2D436572 74696669 63617465 2D363731 30393138
+  34308201 22300D06 092A8648 86F70D01 01010500 0382010F 00308201 0A028201
+  0100E95D 60B65B48 701D5B21 2F83F7D1 6AB73CB2 741BD433 219679C8 4A23C4F7
+  73F99303 2341F239 FEC0DFF2 3A13406F A76035B9 87DC81EF 648C3B53 0368D4F0
+  44925ECB C8ECD40B 1D45A55D 943FCED6 57FCF607 9A5F5FB4 324B2288 9BE7C671
+  F437B44D 13012E84 25CA209B A252BFA6 1034D7A2 A8114697 56B549EA AF7EF5F2
+  66EE2CE0 ADC298D0 C43E536F 8461210E 4B13B294 E7BB7444 9C5D4C7C 5441AA06
+  BAD4BA57 E6BA6942 DDE6099D 5B800D25 1116AA7F A6A2855A DB81CB97 30F7D343
+  F8D83C97 7EB05408 C7F3B7FD 4218D43E 32E0654E 57781FB0 55E3EE02 9A5F3C09
+  8EE9A226 EAE0316A CC5C6352 FE274807 CC7540D0 E0C63948 960F161B 5499D44F
+  BAE30203 010001A3 53305130 1D060355 1D0E0416 04149473 43A8A3C1 611504EE
+  FBC1D403 8D012DC6 2D15301F 0603551D 23041830 16801494 7343A8A3 C1611504
+  EEFBC1D4 038D012D C62D1530 0F060355 1D130101 FF040530 030101FF 300D0609
+  2A864886 F70D0101 0B050003 82010100 7B453479 AF259C9C CDBE55D0 084216CF
+  A4328B54 02E3CA80 9FDB73B2 EB6EA3D6 0A236D9E 1DDE3E43 C42CA438 2608F775
+  C8D33A7D 79DEF246 7395D8B6 DD1AE143 32DAF3AE 965FB399 B99F8E70 C7FFBC93
+  FF3B920B 7A8BA09D C9C7CF5F F2A5E80F DA8A77EC 6F22EFF8 78B263BA 6B6AE375
+  C2C84AC2 9A447858 40AB056B 4E884E6C 8477CD88 44927D1D DBF6787B A86A2063
+  75923AD8 B21D93B7 577EC218 2EE01B0B 90890C81 31FCF635 BE091AF8 769DABFE
+  EEAB0525 6390E741 44C61D52 8DF54C6A 995F8597 EAE42810 4AA6DC9B 51BA28D8
+  19578412 C0679AE2 08602857 ADD87648 6C23F24B C08B97A0 208D4B22 344C1974
+  2D09BC41 B2921CCB C0C56E14 A1B5D96C
+        quit
+!
+!
+memory free low-watermark processor 81225
+!
+!
+spanning-tree mode rapid-pvst
+!
+!
+!
+!
+!
+!
+!
+lldp run
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Ethernet0/0
+ ip address 10.10.10.1 255.255.255.0
+!
+interface Ethernet0/1
+ no ip address
+ shutdown
+!
+interface Ethernet0/2
+ no ip address
+ shutdown
+!
+interface Ethernet0/3
+ no ip address
+ shutdown
+!
+ip forward-protocol nd
+!
+!
+ip http server
+ip http secure-server
+ip route 0.0.0.0 0.0.0.0 Ethernet0/0
+ip route 0.0.0.0 0.0.0.0 10.10.10.2
+ip ssh bulk-mode 131072
+!
+!
+!
+!
+!
+control-plane
+!
+!
+!
+line con 0
+ logging synchronous
+line aux 0
+line vty 0 4
+ login
+ transport input ssh
+!
+!
+!
+!
+end

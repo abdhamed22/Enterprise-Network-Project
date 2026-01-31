@@ -1,0 +1,188 @@
+version 17.12
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+hostname Edge-2
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+ip cef
+login on-success log
+no ipv6 cef
+!
+!
+!
+!
+!
+!
+!
+!
+multilink bundle-name authenticated
+!
+!
+crypto pki trustpoint TP-self-signed-67109168
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-67109168
+ revocation-check none
+ rsakeypair TP-self-signed-67109168
+ hash sha256
+!
+!
+crypto pki certificate chain TP-self-signed-67109168
+ certificate self-signed 01
+  3082032C 30820214 A0030201 02020101 300D0609 2A864886 F70D0101 0B050030
+  2F312D30 2B060355 04030C24 494F532D 53656C66 2D536967 6E65642D 43657274
+  69666963 6174652D 36373130 39313638 301E170D 32363031 33303133 35363538
+  5A170D33 36303133 30313335 3635385A 302F312D 302B0603 5504030C 24494F53
+  2D53656C 662D5369 676E6564 2D436572 74696669 63617465 2D363731 30393136
+  38308201 22300D06 092A8648 86F70D01 01010500 0382010F 00308201 0A028201
+  01008839 4709FE75 7A6F6275 74610220 3273B60E A8B01218 9AD0463B C6568B96
+  01DE16D9 E2A1A662 16E39BA6 8864477E B034379D 0942C933 66744BC4 F5CAC1ED
+  4EFCF691 A404EAEF 89E9B76E 9055AD4D 392852C1 0D1300EC 6BFB11DD 1A4FF280
+  21FF6AC4 9A294A93 B1C479D3 9E882287 01A0EF72 2C46CFB8 355FC1B4 FACCF338
+  CA9FF98D 5269618B 19B085B5 9F574382 28EDFA58 CCA7854B 2DC13071 3913DE9D
+  1C94BD18 DA3A2F23 7E5FAC97 A3BE7E98 CE8E34DD 618D052F 19BCFB64 D5373242
+  ACDD177D 67ACA63E 2EF26E70 B3C98C16 9385ECF9 E4C8DF8B A0467BC3 4C7CC08D
+  12D18009 CC8BADBF 96FC5101 8EFB7838 333DDEC4 A8390AE3 538E6120 691E712E
+  7BE90203 010001A3 53305130 1D060355 1D0E0416 041432A3 C7FD9DE1 1F2EB737
+  22D43769 C5A1CF3A 2B69301F 0603551D 23041830 16801432 A3C7FD9D E11F2EB7
+  3722D437 69C5A1CF 3A2B6930 0F060355 1D130101 FF040530 030101FF 300D0609
+  2A864886 F70D0101 0B050003 82010100 4493569F 43B67149 09A07127 5FD27A95
+  5A7F4F08 3E30CA22 A80B0D15 B406F157 62014F8F 0450C27C BE8615E9 8B518158
+  B943A67A 8CFB2F81 90A2A008 D09F2E9B EF06B828 6AA916A5 1C93D447 B8B4A700
+  ED42C2DA E0DE418B 20874763 34E6639F FEA8ADD4 1BF30EA2 DB42EC1A E412ABB5
+  3C0018DE 62754007 3DB72DC5 2B3AFDBD ACBE4B21 364D0F45 CC39FAC0 02607333
+  7AE77807 D18F3661 114396FA B9B297B1 D7B4F29A 83473205 D0E340A9 D360C54F
+  2117FA33 396957F8 98576F16 C4532926 A3306697 4E4BBFCE 909D5432 2D0992FE
+  481797D3 CA6EE776 6C95D466 D0EC973D 216CB11E 8E657FC9 901E5856 6BC4D444
+  C7337E01 A448ED60 8C94C587 4CCF6243
+        quit
+!
+!
+memory free low-watermark processor 81225
+!
+!
+spanning-tree mode rapid-pvst
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback1
+ ip address 172.16.0.3 255.255.255.255
+!
+interface Ethernet0/0
+ ip address 10.100.5.2 255.255.255.252
+ ip ospf network point-to-point
+!
+interface Ethernet0/1
+ ip address 10.100.4.2 255.255.255.252
+ ip ospf network point-to-point
+!
+interface Ethernet0/2
+ ip address 10.100.2.2 255.255.255.252
+ ip ospf network point-to-point
+!
+interface Ethernet0/3
+ ip address 10.200.0.1 255.255.255.252
+!
+interface Ethernet1/0
+ no ip address
+ shutdown
+!
+interface Ethernet1/1
+ no ip address
+ shutdown
+!
+interface Ethernet1/2
+ no ip address
+ shutdown
+!
+interface Ethernet1/3
+ no ip address
+ shutdown
+!
+interface Ethernet2/0
+ no ip address
+ shutdown
+!
+interface Ethernet2/1
+ no ip address
+ shutdown
+!
+interface Ethernet2/2
+ no ip address
+ shutdown
+!
+interface Ethernet2/3
+ no ip address
+ shutdown
+!
+router ospf 1
+ network 10.100.2.0 0.0.0.3 area 0
+ network 10.100.4.0 0.0.0.3 area 0
+ network 10.100.5.0 0.0.0.3 area 0
+ network 10.200.0.0 0.0.0.7 area 1
+ network 172.16.0.3 0.0.0.0 area 0
+ default-information originate
+!
+ip forward-protocol nd
+!
+!
+ip http server
+ip http secure-server
+ip ssh bulk-mode 131072
+!
+!
+!
+!
+!
+control-plane
+!
+!
+!
+line con 0
+ logging synchronous
+line aux 0
+line vty 0 4
+ login
+ transport input ssh
+!
+!
+!
+!
+end

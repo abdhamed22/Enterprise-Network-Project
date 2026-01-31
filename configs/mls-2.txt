@@ -1,0 +1,266 @@
+version 17.12
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+hostname MLS-2
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+ip audit notify log
+ip audit po max-events 100
+ip cef
+login on-success log
+no ipv6 cef
+!
+!
+!
+!
+!
+!
+!
+vtp version 1
+multilink bundle-name authenticated
+!
+crypto pki trustpoint TP-self-signed-67108880
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-67108880
+ revocation-check none
+ rsakeypair TP-self-signed-67108880
+ hash sha256
+!
+!
+crypto pki certificate chain TP-self-signed-67108880
+ certificate self-signed 01
+  3082032C 30820214 A0030201 02020101 300D0609 2A864886 F70D0101 0B050030
+  2F312D30 2B060355 04030C24 494F532D 53656C66 2D536967 6E65642D 43657274
+  69666963 6174652D 36373130 38383830 301E170D 32363031 33303130 32363536
+  5A170D33 36303133 30313032 3635365A 302F312D 302B0603 5504030C 24494F53
+  2D53656C 662D5369 676E6564 2D436572 74696669 63617465 2D363731 30383838
+  30308201 22300D06 092A8648 86F70D01 01010500 0382010F 00308201 0A028201
+  01009CBD C5892B3D 55C06274 8FCDB0D8 E8947824 F38DAD14 B27FE206 77CCCDC6
+  ED82235D 0229C544 844953D2 03C3BA60 7B9B76F0 69E8E907 3B0A9196 6B018292
+  C69264E4 1D21CB89 57F660D6 58830C80 A11D4C1B 98B13073 91B9B89E 0B0C5039
+  6C7D8AEB 5CB14961 17B6D902 9F7BB86C DC2F7238 3061F776 277860C2 52AF9D93
+  034EF3C5 FD908119 E380E6DD 73CC2C20 06CB29BB EBEAA73D 867F4E3B D303CD32
+  5B391F6E 94E1CCED A9045EA3 1928668B 15ED87FD F8D25965 8057FE1A E8F4DAF8
+  6E17E374 9F79A76E 30C766C7 491959C7 215078FB 723C7EF4 4F5A79BD 8160AC60
+  A8E3905D 68795340 2A82981C A4EEB37D 7979D18C 441B1224 36F326B5 12EAF953
+  796D0203 010001A3 53305130 1D060355 1D0E0416 041475B0 5C273F30 43724696
+  F46CA20E 795668D6 F2EE301F 0603551D 23041830 16801475 B05C273F 30437246
+  96F46CA2 0E795668 D6F2EE30 0F060355 1D130101 FF040530 030101FF 300D0609
+  2A864886 F70D0101 0B050003 82010100 4179E69A BA37F278 7777DB20 FC03E25E
+  FE637180 EFCA62F1 204DF7E2 EC4A8C4C E33430E1 C3D3CA1F B2659BFE A9383497
+  51BA0C5D FCBDC7F2 09B6AF63 9295EAF4 846A23E2 DD9A6EE7 0876FAC7 3A551BFC
+  9352F59C FA3A6B5A 4254B1BF 36BCDF88 666049E3 2370E7C8 6965B1F6 D6EB76B6
+  C52C9689 188E34DF 4720C47B 430BCE9B 7F8D4AE1 FB50D36F FA9C31C9 2D12EB82
+  6C4A9C93 4D9A8B10 3B7323B1 7ED894DE FC6120C2 7A7183B5 464749BA A94A25B2
+  33BA5DCE BA74DEDE 0F94FCEF 26F5A2CC FD7FAE8E 8A8F588E 1516FAEB ABF37238
+  BDAC45CF 8A1C070C 15151992 E5C5ACA5 F2325953 6868D058 4C48DCBB 61C3A12F
+  1B40CE1F 19B6F794 B55DAFFB F2AAAF3C
+        quit
+!
+!
+memory free low-watermark processor 80589
+!
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+spanning-tree vlan 30,99,101-102 priority 8192
+spanning-tree vlan 103-105 priority 4096
+!
+!
+vlan internal allocation policy ascending
+!
+lldp run
+!
+!
+!
+!
+interface Loopback0
+ ip address 172.16.0.2 255.255.255.255
+!
+interface Port-channel1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Ethernet0/0
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Ethernet0/1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Ethernet0/2
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Ethernet0/3
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Ethernet1/0
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Ethernet1/1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 1 mode passive
+!
+interface Ethernet1/2
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 1 mode passive
+!
+interface Ethernet1/3
+ switchport access vlan 30
+ switchport mode access
+!
+interface Ethernet2/0
+ no switchport
+ ip address 10.100.4.1 255.255.255.252
+ ip ospf network point-to-point
+!
+interface Ethernet2/1
+ no switchport
+ ip address 10.100.3.1 255.255.255.252
+ ip ospf network point-to-point
+!
+interface Ethernet2/2
+!
+interface Ethernet2/3
+!
+interface Ethernet3/0
+!
+interface Ethernet3/1
+!
+interface Ethernet3/2
+!
+interface Ethernet3/3
+!
+interface Ethernet4/0
+!
+interface Ethernet4/1
+!
+interface Ethernet4/2
+!
+interface Ethernet4/3
+!
+interface Vlan44
+ ip address 172.30.0.1 255.255.255.252
+ ip ospf network point-to-point
+!
+interface Vlan99
+ ip address 10.10.100.2 255.255.255.0
+ vrrp 1 ip 10.10.100.1
+!
+interface Vlan101
+ ip address 10.1.101.2 255.255.255.0
+ ip helper-address 10.10.10.1
+ ip access-group ISOLATE-VLANs in
+ vrrp 101 ip 10.1.101.1
+!
+interface Vlan102
+ ip address 10.1.102.2 255.255.255.0
+ ip helper-address 10.10.10.1
+ ip access-group ISOLATE-VLANs in
+ vrrp 102 ip 10.1.102.1
+!
+interface Vlan103
+ ip address 10.1.103.2 255.255.255.0
+ ip helper-address 10.10.10.1
+ ip access-group ISOLATE-VLANs in
+ vrrp 103 ip 10.1.103.1
+ vrrp 103 priority 120
+!
+interface Vlan104
+ ip address 10.1.104.2 255.255.255.0
+ ip helper-address 10.10.10.1
+ ip access-group ISOLATE-VLANs in
+ vrrp 104 ip 10.1.104.1
+ vrrp 104 priority 120
+!
+interface Vlan105
+ ip address 10.1.105.2 255.255.255.0
+ ip helper-address 10.10.10.1
+ ip access-group ISOLATE-VLANs in
+ vrrp 105 ip 10.1.105.1
+ vrrp 105 priority 120
+!
+interface Vlan201
+ no ip address
+ ip helper-address 10.10.10.1
+ shutdown
+!
+router ospf 1
+ passive-interface default
+ no passive-interface Ethernet2/0
+ no passive-interface Ethernet2/1
+ no passive-interface Vlan44
+ network 10.1.101.0 0.0.0.255 area 0
+ network 10.1.102.0 0.0.0.255 area 0
+ network 10.1.103.0 0.0.0.255 area 0
+ network 10.1.104.0 0.0.0.255 area 0
+ network 10.1.105.0 0.0.0.255 area 0
+ network 10.100.3.0 0.0.0.3 area 0
+ network 10.100.4.0 0.0.0.3 area 0
+ network 172.16.0.2 0.0.0.0 area 0
+ network 172.30.0.0 0.0.0.3 area 0
+!
+ip forward-protocol nd
+!
+!
+ip http server
+ip http secure-server
+ip ssh bulk-mode 131072
+!
+ip access-list extended ISOLATE-VLANs
+ 10 permit udp any host 10.10.10.1 eq bootps
+ 20 permit udp any host 10.10.10.1 eq bootpc
+ 70 deny ip any host 10.10.10.1
+ 90 deny ip any 10.100.1.0 0.0.0.3
+ 100 deny ip any 10.100.2.0 0.0.0.3
+ 110 deny ip any 10.100.3.0 0.0.0.3
+ 120 deny ip any 10.100.4.0 0.0.0.3
+ 130 deny ip any 10.100.5.0 0.0.0.3
+ 140 deny ip any host 172.16.0.3
+ 150 deny ip any host 172.16.0.4
+ 160 deny ip any 10.200.0.0 0.0.0.3
+ 170 deny ip any 10.201.0.0 0.0.0.3
+ 171 deny ip any 10.10.100.0 0.0.0.255
+ 180 permit ip any any
+!
+!
+!
+!
+!
+control-plane
+!
+!
+!
+line con 0
+ logging synchronous
+line aux 0
+line vty 0 4
+ login
+ transport input ssh
+!
+!
+end

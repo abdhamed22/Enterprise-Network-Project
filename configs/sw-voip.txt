@@ -1,0 +1,170 @@
+version 17.12
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+hostname SW-VoIP
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+ip audit notify log
+ip audit po max-events 100
+ip cef
+login on-success log
+no ipv6 cef
+!
+!
+!
+!
+!
+!
+!
+vtp version 1
+multilink bundle-name authenticated
+!
+crypto pki trustpoint TP-self-signed-67108992
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-67108992
+ revocation-check none
+ rsakeypair TP-self-signed-67108992
+ hash sha256
+!
+!
+crypto pki certificate chain TP-self-signed-67108992
+ certificate self-signed 01
+  3082032C 30820214 A0030201 02020101 300D0609 2A864886 F70D0101 0B050030
+  2F312D30 2B060355 04030C24 494F532D 53656C66 2D536967 6E65642D 43657274
+  69666963 6174652D 36373130 38393932 301E170D 32363031 33303033 33313034
+  5A170D33 36303133 30303333 3130345A 302F312D 302B0603 5504030C 24494F53
+  2D53656C 662D5369 676E6564 2D436572 74696669 63617465 2D363731 30383939
+  32308201 22300D06 092A8648 86F70D01 01010500 0382010F 00308201 0A028201
+  0100FA40 6AE8D533 673A710B F54E406D B38D0297 C96E369B 4AEC4320 210759EB
+  455EC845 13646700 E0E32F96 8FB15596 A3730AB2 79DBDBA6 8A03BA61 E00B06B4
+  1349B3E5 FE3BE42F 1456CBCE 3288B453 62DBF117 BB207F51 CC410A82 A9D34086
+  8BCA3BB2 13D82CB8 384572CF 27954D57 C852D137 32A14B14 99C0E7F8 8E2CF0E5
+  4D41A62A 726D04A2 58FDF31C 636E54BC 0D6F5CDE CE3C37FF 08EBC841 670C1F67
+  9A6D29D1 05E7327F 5DF8B2FF CE29A9C9 1FD755D6 579F2EDC F8FB0D8C BE6DC5E3
+  BA5CED8F EA8FF01F 28C8A00C A4E17B01 71186B8B DBDF87FC 34DFD685 561D2753
+  4DB74211 3A54056A 723FEA96 8A791041 C548B2EA 8563C184 5AD7C969 50E92360
+  EDF90203 010001A3 53305130 1D060355 1D0E0416 0414FF53 70B2C106 7A390FEC
+  5025B9F0 977D9A18 F43B301F 0603551D 23041830 168014FF 5370B2C1 067A390F
+  EC5025B9 F0977D9A 18F43B30 0F060355 1D130101 FF040530 030101FF 300D0609
+  2A864886 F70D0101 0B050003 82010100 3757D6AE A68DB8A2 125C721E 46310E31
+  522F4E5F 1F2DF770 ED0A65B5 2A510909 E3BB6FF4 A904F6ED E7C7D85B 2AC98E9A
+  A4F0D75F 6A27F1E2 853E766E 586A349A 13104F6B E1681185 6C45F138 4C4B9EF0
+  B2792D36 54EC719A 53E7820E 7E3A156D D4559CF3 7E626AAA E5B47E5E 7ADB4B5A
+  EB86CB7A B3054D41 63C37E3D AC500EF1 76C23ACF FA5BA2E3 37927700 3CEA2E47
+  ED74393B 2D7E4B59 80766EF6 3F85EFAE 3D6C4BEB A3D136A5 0DF3DE59 182BA204
+  3AB46231 D670965F AFA9979B 8863DC15 D3CAAA66 FDCBDEEB 6E2B3E35 47D7E84E
+  D0854A2F E82A3C6D 1C5BA87B FDAE1364 4F41B396 23411FE2 7E47473D E8A29164
+  EB412B4E 4F4AD5FA BDC5DD04 8C5C9AEF
+        quit
+!
+!
+memory free low-watermark processor 80589
+!
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+!
+!
+vlan internal allocation policy ascending
+!
+!
+!
+!
+!
+interface Ethernet0/0
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Ethernet0/1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Ethernet0/2
+ switchport access vlan 104
+ switchport mode access
+ switchport port-security
+!
+interface Ethernet0/3
+ switchport access vlan 104
+ switchport mode access
+ switchport port-security
+!
+interface Ethernet1/0
+!
+interface Ethernet1/1
+!
+interface Ethernet1/2
+!
+interface Ethernet1/3
+!
+interface Ethernet2/0
+!
+interface Ethernet2/1
+!
+interface Ethernet2/2
+!
+interface Ethernet2/3
+!
+interface Ethernet3/0
+!
+interface Ethernet3/1
+!
+interface Ethernet3/2
+!
+interface Ethernet3/3
+!
+interface Ethernet4/0
+!
+interface Ethernet4/1
+!
+interface Ethernet4/2
+!
+interface Ethernet4/3
+!
+interface Vlan99
+ ip address 10.10.100.7 255.255.255.0
+ ip helper-address 10.10.100.1
+!
+ip forward-protocol nd
+!
+!
+ip http server
+ip http secure-server
+ip ssh bulk-mode 131072
+!
+!
+!
+!
+!
+!
+control-plane
+!
+!
+!
+line con 0
+ logging synchronous
+line aux 0
+line vty 0 4
+ login
+ transport input ssh
+!
+!
+end

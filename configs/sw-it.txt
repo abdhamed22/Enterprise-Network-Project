@@ -1,0 +1,178 @@
+version 17.12
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+hostname SW-IT
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+ip audit notify log
+ip audit po max-events 100
+ip cef
+login on-success log
+no ipv6 cef
+!
+!
+!
+!
+!
+!
+!
+vtp version 1
+multilink bundle-name authenticated
+!
+crypto pki trustpoint TP-self-signed-67108944
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-67108944
+ revocation-check none
+ rsakeypair TP-self-signed-67108944
+ hash sha256
+!
+!
+crypto pki certificate chain TP-self-signed-67108944
+ certificate self-signed 01
+  3082032C 30820214 A0030201 02020101 300D0609 2A864886 F70D0101 0B050030
+  2F312D30 2B060355 04030C24 494F532D 53656C66 2D536967 6E65642D 43657274
+  69666963 6174652D 36373130 38393434 301E170D 32363031 33303033 32393137
+  5A170D33 36303133 30303332 3931375A 302F312D 302B0603 5504030C 24494F53
+  2D53656C 662D5369 676E6564 2D436572 74696669 63617465 2D363731 30383934
+  34308201 22300D06 092A8648 86F70D01 01010500 0382010F 00308201 0A028201
+  0100BE03 EFE4670A 33F8C7F6 11FF3EB0 A4E23815 949612DB C3EF3D5C AD460C4A
+  361FCB4C 21B08BD5 370E23F3 BE24711E F85A838F 473C8FE6 D761AD80 2B6BC945
+  8C900303 788F3CDE EDA058A9 AE2223BB 89310E92 BEF3C9EC 9FA7D9B4 4A1BA2FD
+  07DCA7A6 5B78B2AE 3397AF6C 396BAA38 366AEF76 693AE83F 6EC89CCC 27C28AD0
+  CCE62DA0 379D4CBB 929DE9AB 2FC62416 643AED31 002D3A52 246D96A2 AFDDF3BC
+  5E8ED05C 2AA54119 1CC65E79 9EC6CBB9 80987124 6C2F5F73 16BFBD5C A45D7C9F
+  C248A5C7 0F020A22 320F4FC8 87C407BB 33F9905E 39BF0215 1A09BAFE 846FE645
+  1A14BA6A E088E6E1 736A303D 387D11A5 4CAF045C 50933A59 5A65A8EE F672F271
+  6D2D0203 010001A3 53305130 1D060355 1D0E0416 04140583 F2F56F30 B3AFFE1A
+  2E51FAC2 30FA0427 4C59301F 0603551D 23041830 16801405 83F2F56F 30B3AFFE
+  1A2E51FA C230FA04 274C5930 0F060355 1D130101 FF040530 030101FF 300D0609
+  2A864886 F70D0101 0B050003 82010100 BAAE8A6A 71B91E04 0F8F3EC8 99AAC77E
+  EC079A2D E35C5185 9524CA42 DF1B55FB 2902A922 73DF990E 150CA8D1 21331F77
+  73DA49E3 CF79D51D 4EB2ADAF FFE9D6D7 14CF0969 C604B367 CBE3EED9 77972A0A
+  952EB024 1F62F7A7 7808A0AC 2F4E2517 2E38E82A D3FD31A0 DF0C1893 9E8683C6
+  8A9E6539 755E16C8 65082BB0 EC60CEF7 013F233F 78015E16 1BE065F1 7AF65968
+  530B69F3 73D2114F 24FE005C 680F31EA 32EE759D 6077E806 CEA799B3 C84E7EF6
+  25AF7621 4E71A9EA 9356FF19 79CF9C57 479C14E3 D4E29E14 9C4C95B3 EB936791
+  285FA0A3 3264B2BD B79EB778 5F1D7B34 E64EE981 43D60339 9A3EE57E B5C5E742
+  E99C8898 41743E60 FCB945D9 52C8C794
+        quit
+!
+!
+memory free low-watermark processor 80589
+!
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+!
+username admin password 0 a1
+!
+vlan internal allocation policy ascending
+!
+!
+!
+!
+!
+interface Ethernet0/0
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Ethernet0/1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Ethernet0/2
+ switchport access vlan 101
+ switchport mode access
+ switchport port-security
+!
+interface Ethernet0/3
+ switchport access vlan 101
+ switchport mode access
+ switchport port-security
+!
+interface Ethernet1/0
+ switchport access vlan 99
+ switchport mode access
+ switchport port-security
+!
+interface Ethernet1/1
+!
+interface Ethernet1/2
+!
+interface Ethernet1/3
+!
+interface Ethernet2/0
+!
+interface Ethernet2/1
+!
+interface Ethernet2/2
+!
+interface Ethernet2/3
+!
+interface Ethernet3/0
+!
+interface Ethernet3/1
+!
+interface Ethernet3/2
+!
+interface Ethernet3/3
+!
+interface Ethernet4/0
+!
+interface Ethernet4/1
+!
+interface Ethernet4/2
+!
+interface Ethernet4/3
+!
+interface Vlan99
+ ip address 10.10.100.5 255.255.255.0
+ ip helper-address 10.10.100.1
+!
+ip forward-protocol nd
+!
+!
+ip http server
+ip http secure-server
+ip ssh bulk-mode 131072
+!
+ip access-list standard den-ssh
+ 10 permit 10.10.100.0 0.0.0.255
+!
+!
+!
+!
+!
+!
+control-plane
+!
+!
+!
+line con 0
+ logging synchronous
+line aux 0
+line vty 0 4
+ access-class den-ssh in
+ login local
+ transport input ssh
+!
+!
+end

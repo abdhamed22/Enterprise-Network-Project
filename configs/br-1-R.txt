@@ -1,0 +1,201 @@
+version 17.12
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+hostname BR-1-R
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+ip cef
+login on-success log
+no ipv6 cef
+!
+!
+!
+!
+!
+!
+!
+!
+multilink bundle-name authenticated
+!
+!
+crypto pki trustpoint TP-self-signed-67108912
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-67108912
+ revocation-check none
+ rsakeypair TP-self-signed-67108912
+ hash sha256
+!
+!
+crypto pki certificate chain TP-self-signed-67108912
+ certificate self-signed 01
+  3082032C 30820214 A0030201 02020101 300D0609 2A864886 F70D0101 0B050030
+  2F312D30 2B060355 04030C24 494F532D 53656C66 2D536967 6E65642D 43657274
+  69666963 6174652D 36373130 38393132 301E170D 32363031 33313037 30373137
+  5A170D33 36303133 31303730 3731375A 302F312D 302B0603 5504030C 24494F53
+  2D53656C 662D5369 676E6564 2D436572 74696669 63617465 2D363731 30383931
+  32308201 22300D06 092A8648 86F70D01 01010500 0382010F 00308201 0A028201
+  0100A90F 4A72F6E2 81422030 32B03EE4 31C38DFA 5083E7BA 02F6793C 9CB2F693
+  DB6651DF 197B096F 500EA684 D8A3E0C5 B431D28D AFA63560 1469F2D0 599A6D1F
+  1BA973AD 8BA92FA3 B73D3B8E 7DF97035 520D116D E2415829 AA17E7B5 9CA65FD0
+  BD0A3906 B52EE989 26827D52 4046B300 1F40AA95 024627F8 C3C9C240 D2080874
+  5EC9B78A FEEB2402 F050D990 D50E9E7C BD5133E4 548438F5 36BBE1E2 5E8BFD48
+  72BC2F4F C3C73656 478D9AB6 1F1EB2C1 7E67FE0F 68C2372D ECA72115 DDD232A2
+  23D2810B C3D2445F 57D3DFFD ECD9566D FF56D582 647C4168 C6ECB64D 90274959
+  4E80D91A A52C12F9 0A2833D4 38FC6EFA 669AE52F 2E63E649 47E434A4 36B01334
+  ACE70203 010001A3 53305130 1D060355 1D0E0416 04142632 906A4B38 27935B3A
+  37515E83 568DC809 E1B9301F 0603551D 23041830 16801426 32906A4B 3827935B
+  3A37515E 83568DC8 09E1B930 0F060355 1D130101 FF040530 030101FF 300D0609
+  2A864886 F70D0101 0B050003 82010100 9AF1E016 89E4E52F 8B56BB7D A6D0196C
+  D07C3F14 D7195A85 51CA3976 4A982B4F EFC4A52C 8C43CF55 8FB4A831 DB06C50E
+  9C7D058A 57B0072B F5292F5E C8303C1E 871AB390 17FC0CB2 83FFD599 27D3DA23
+  A30DA68B FFFC91EC D873C217 AFF067A7 C631D122 D5D9E66D 31A72152 E61341E1
+  BAA54344 6820B3A2 B14A6A45 4C5F84B3 70BFAD6F 79C7580D A53DDBF3 1A0FDC23
+  6F102CF2 009B4CDF 703E7478 57735542 CC245B8B 4BFE9899 851CEE56 7BA4A0FE
+  9F9B43A9 60FF6771 FE70FD97 C628B5EB 2164A6D4 6F6E97F6 69939581 49D67498
+  23723CA1 1767A427 32B57F8A CF7BA74D 9EC3A54A FA3A9308 371C210C 7B0CC81E
+  E8B0AE6B FB8CA430 4312C099 13AFD1A7
+        quit
+!
+!
+memory free low-watermark processor 81225
+!
+!
+spanning-tree mode rapid-pvst
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Ethernet0/0
+ no ip address
+!
+interface Ethernet0/0.201
+ encapsulation dot1Q 201
+ ip address 10.2.201.1 255.255.255.0
+ ip helper-address 10.10.10.1
+!
+interface Ethernet0/1
+ ip address 10.200.0.2 255.255.255.252
+!
+interface Ethernet0/2
+ ip address 10.201.0.2 255.255.255.252
+!
+interface Ethernet0/3
+ no ip address
+ shutdown
+!
+interface Ethernet1/0
+ no ip address
+ shutdown
+!
+interface Ethernet1/1
+ no ip address
+ shutdown
+!
+interface Ethernet1/2
+ no ip address
+ shutdown
+!
+interface Ethernet1/3
+ no ip address
+ shutdown
+!
+interface Ethernet2/0
+ no ip address
+ shutdown
+!
+interface Ethernet2/1
+ no ip address
+ shutdown
+!
+interface Ethernet2/2
+ no ip address
+ shutdown
+!
+interface Ethernet2/3
+ no ip address
+ shutdown
+!
+interface Ethernet3/0
+ no ip address
+ shutdown
+!
+interface Ethernet3/1
+ no ip address
+ shutdown
+!
+interface Ethernet3/2
+ no ip address
+ shutdown
+!
+interface Ethernet3/3
+ no ip address
+ shutdown
+!
+router ospf 1
+ network 10.2.201.0 0.0.0.255 area 1
+ network 10.200.0.0 0.0.0.7 area 1
+ network 10.201.0.0 0.0.0.7 area 1
+!
+ip forward-protocol nd
+!
+!
+ip http server
+ip http secure-server
+ip ssh bulk-mode 131072
+!
+!
+!
+!
+!
+control-plane
+!
+!
+!
+line con 0
+ logging synchronous
+line aux 0
+line vty 0 4
+ login
+ transport input ssh
+!
+!
+!
+!
+end
